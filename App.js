@@ -1,4 +1,3 @@
-// App.js
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -87,24 +86,7 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.productPreview} />
       </View>
       
-      {/* Additional navigation icons */}
-      <View style={styles.additionalNavContainer}>
-        <View style={[styles.navIconContainer, { backgroundColor: '#e6effd' }]}>
-          <Ionicons name="home" size={20} color="#4a86f7" />
-        </View>
-        <View style={styles.navIconContainer}>
-          <Ionicons name="notifications-outline" size={20} color="#aaa" />
-        </View>
-        <View style={styles.navIconContainer}>
-          <Ionicons name="scan-outline" size={20} color="#aaa" />
-        </View>
-        <View style={styles.navIconContainer}>
-          <Ionicons name="time-outline" size={20} color="#aaa" />
-        </View>
-        <View style={styles.navIconContainer}>
-          <Ionicons name="cart-outline" size={20} color="#aaa" />
-        </View>
-      </View>
+      {/* Removed additional navigation icons since they will be handled by Tab Navigator */}
     </SafeAreaView>
   );
 };
@@ -154,7 +136,26 @@ const ScanScreen = ({ navigation }) => {
   );
 };
 
-// Tab Navigator for main app
+// Placeholder components for new tabs
+const NotificationsScreen = () => (
+  <SafeAreaView style={styles.placeholderContainer}>
+    <Text style={styles.placeholderText}>Notifications Screen</Text>
+  </SafeAreaView>
+);
+
+const HistoryScreen = () => (
+  <SafeAreaView style={styles.placeholderContainer}>
+    <Text style={styles.placeholderText}>History Screen</Text>
+  </SafeAreaView>
+);
+
+const CartScreen = () => (
+  <SafeAreaView style={styles.placeholderContainer}>
+    <Text style={styles.placeholderText}>Cart Screen</Text>
+  </SafeAreaView>
+);
+
+// Tab Navigator for main app with new icons
 const TabNavigator = () => {
   return (
     <Tab.Navigator
@@ -164,8 +165,14 @@ const TabNavigator = () => {
 
           if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
+          } else if (route.name === 'Notifications') {
+            iconName = focused ? 'notifications' : 'notifications-outline';
           } else if (route.name === 'Scan') {
             iconName = focused ? 'scan' : 'scan-outline';
+          } else if (route.name === 'History') {
+            iconName = focused ? 'time' : 'time-outline';
+          } else if (route.name === 'Cart') {
+            iconName = focused ? 'cart' : 'cart-outline';
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
@@ -176,6 +183,7 @@ const TabNavigator = () => {
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Notifications" component={NotificationsScreen} />
       <Tab.Screen 
         name="Scan" 
         component={ScanScreen}
@@ -188,6 +196,8 @@ const TabNavigator = () => {
           },
         })}
       />
+      <Tab.Screen name="History" component={HistoryScreen} />
+      <Tab.Screen name="Cart" component={CartScreen} />
     </Tab.Navigator>
   );
 };
@@ -293,19 +303,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginRight: 12,
   },
-  additionalNavContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-  },
-  navIconContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 8,
-    backgroundColor: '#f2f2f7',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   scanContainer: {
     flex: 1,
     backgroundColor: '#f5f5f5',
@@ -403,23 +400,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
+  placeholderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+  placeholderText: {
+    fontSize: 18,
+    fontWeight: '600',
+  },
 });
-
-// package.json dependencies to install:
-/*
-{
-  "dependencies": {
-    "@react-navigation/bottom-tabs": "^6.5.11",
-    "@react-navigation/native": "^6.1.9",
-    "@react-navigation/stack": "^6.3.20",
-    "expo": "~49.0.15",
-    "expo-status-bar": "~1.6.0",
-    "react": "18.2.0",
-    "react-native": "0.72.6",
-    "react-native-gesture-handler": "~2.12.0",
-    "react-native-safe-area-context": "4.6.3",
-    "react-native-screens": "~3.22.0",
-    "@expo/vector-icons": "^13.0.0"
-  }
-}
-*/
